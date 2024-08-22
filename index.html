@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perdón, Laura</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ffafbd, #ffc3a0, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1); /* Degradado romántico */
+      font-family: 'Arial', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fondo decorativo con corazones */
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/H98RXD8.png') repeat; /* Corazones sutiles */
+      opacity: 0.1; /* Baja opacidad para que no distraiga demasiado */
+      z-index: -2;
+    }
+
+    /* Estilo suminagashi */
+    .suminagashi {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      background: url('https://i.imgur.com/GVqXgDX.jpg'); /* Ejemplo de diseño suminagashi */
+      background-size: cover;
+      background-repeat: no-repeat;
+      transform: translateY(-50%);
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    h2 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00796b; /* Verde azulado */
+    }
+
+    button {
+      min-width: 130px;
+      height: 40px;
+      color: #fff;
+      padding: 5px 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      outline: none;
+      border-radius: 5px;
+      background: #00796b; /* Verde azulado */
+      border: none;
+      margin: 5px;
+    }
+
+    button:hover {
+      background-color: #004d40;
+      transform: scale(1.1);
+    }
+
+    #siButton {
+      transition: all 0.5s ease;
+    }
+
+    #siButton.clicked {
+      transform: scale(1.5);
+      background: #00796b;
+    }
+
+    #mediaContainer {
+      display: none;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fondo de corazones decorativos -->
+  <div class="hearts"></div>
+  
+  <!-- Diseño suminagashi en el fondo -->
+  <div class="suminagashi"></div>
+
+  <h2>¿Me perdonas?</h2>
+  
+  <button id="siButton" onclick="mostrarMensaje()">Sí</button>
+  <button id="noButton" onclick="mostrarMedia()">No</button>
+
+  <div id="mediaContainer">
+    <img id="displayedImage" alt="">
+    <audio id="audio" autoplay>
+      <source src="audio/somewhere only we know (Gustixa & Rhianne).mp3" type="audio/mp3">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+  </div>
+ 
+  <script>
+    var crecimientoActual = 0;
+    var currentImageIndex = 0;
+    var imageUrls = [
+      "img/de2c0f5ad5033b598b91510142ca88c4.gif",
+      "img/2.jpg",
+      "img/3.jpg",
+      "img/4.jpg",
+      "img/5.jpg",
+    ];
+
+    var intervalId;
+
+    function mostrarMensaje() {
+      window.location.href = "Te_Amo.html";
+    }
+
+    function cambiarImagen() {
+      var displayedImage = document.getElementById("displayedImage");
+      displayedImage.src = imageUrls[currentImageIndex];
+      currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+    }
+
+    function agrandarBoton() {
+      var siButton = document.getElementById("siButton");
+      crecimientoActual += 20; // Incrementa el tamaño cada vez más
+      siButton.style.width = 130 + crecimientoActual + "px";
+      siButton.style.height = 40 + crecimientoActual + "px";
+    }
+
+    function mostrarMedia() {
+      var mediaContainer = document.getElementById("mediaContainer");
+      var audio = document.getElementById("audio");
+
+      // Detener el intervalo de cambio automático de imágenes
+      clearInterval(intervalId);
+
+      mediaContainer.style.display = "block";
+      agrandarBoton();
+      cambiarImagen();
+
+      // Reproducir el audio automáticamente
+      audio.play();
+
+      // Cambiar automáticamente la imagen cada 10 segundos
+      intervalId = setInterval(cambiarImagen, 10000);
+    }
+  </script>
+</body>
+</html>

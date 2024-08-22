@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te Amo, Laura</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff; /* Azul cielo suave de fondo */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .heart {
+            --size: 120px; 
+            --color: #87CEEB; /* Azul cielo */
+            transform: rotate(45deg);
+            animation: beat 1s infinite alternate ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes beat {
+            to {
+                transform: rotate(45deg) scale(0.8);
+            }
+        }
+
+        .heart,
+        .heart::before,
+        .heart::after {
+            width: var(--size);
+            height: var(--size);
+            background: var(--color);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            display: block;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            margin-top: calc(var(--size) * -0.5);
+        }
+
+        .heart::after {
+            margin-top: calc(var(--size) * -0.5);
+            margin-left: calc(var(--size) * -0.5);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #333;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out, transform 0.5s;
+            transform: scale(1);
+        }
+
+        h2.appear {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        h2.disappear {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        @media (min-width: 600px) {
+            .heart {
+                --size: 180px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="heart"></div>
+    <br>
+    <img src="img/90d2a025b1e962f62b679389011a4f71.gif" alt="">
+    <h2 id="phrases">¡Gracias por perdonarme, amor! Te amo</h2>
+
+    <audio id="audio" autoplay>
+        <source src="audio/Vance Joy - Riptide (Lyrics).mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var audio = document.getElementById('audio');
+            var phrases = ["¡Gracias por perdonarme, amor! Te amo", "Eres mi luz en la oscuridad", "Juntos por siempre"];
+            var currentPhraseIndex = 0;
+            var h2 = document.getElementById('phrases');
+
+            function updatePhrase() {
+                h2.classList.add('disappear');
+                setTimeout(function () {
+                    h2.textContent = phrases[currentPhraseIndex];
+                    h2.classList.remove('disappear');
+                    h2.classList.add('appear');
+                }, 500);
+            }
+
+            updatePhrase();
+
+            function autoChangePhrase() {
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                updatePhrase();
+            }
+
+            document.querySelector('.heart').addEventListener('click', function () {
+                var heart = document.querySelector('.heart');
+                var currentColor = getComputedStyle(heart).getPropertyValue('--color');
+                heart.style.setProperty('--color', currentColor === '#87CEEB' ? 'red' : '#87CEEB');
+            });
+
+            setInterval(autoChangePhrase, 5000);
+        });
+    </script>
+</body>
+
+</html>
